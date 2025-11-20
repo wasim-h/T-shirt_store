@@ -1,26 +1,26 @@
-# 👕 AI-Powered T-Shirt Store Assistant
+# 👕 AI-Powered T-Shirt Store Assistant (Ollama Edition)
 
-A GenAI-powered application that helps users find t-shirts using natural language. Instead of applying manual filters, users can simply ask: *"Show me extra large white t-shirts under $20"* or *"Do you have any Levi's t-shirts in stock?"*
+A local GenAI application that helps users query a T-shirt store database using natural language. It runs entirely offline using **Ollama** and **LangChain**, ensuring data privacy and zero API costs.
 
 ## 🚀 Features
-- **Natural Language Search:** Uses an LLM to interpret user queries.
-- **Database Integration:** Automatically converts user questions into SQL queries (Text-to-SQL).
-- **Few-Shot Learning:** Uses `few_shots.py` to train the model on specific examples for higher accuracy.
+- **Local LLM Power:** Uses `Llama 3` (or `Mistral`) via Ollama for reasoning.
+- **Text-to-SQL:** Converts natural English questions ("How many white Nike shirts do we have?") into SQL queries.
+- **Privacy First:** No data leaves your local machine.
+- **Few-Shot Learning:** Uses `few_shots.py` to train the model on domain-specific SQL examples.
 
 ## 🛠️ Tech Stack
-- **Python**
+- **Python 3.10+**
+- **Ollama** (Local LLM Runner)
+- **LangChain** (Orchestration)
 - **Streamlit** (Frontend)
-- **LangChain** (LLM Framework)
-- **Google Gemini / OpenAI** (LLM)
-- **ChromaDB / FAISS** (Vector Store for few-shots)
+- **ChromaDB** (Vector Store for example selection)
 
-## 📂 Project Structure
-- `main.py`: The main Streamlit application entry point.
-- `langHelp.py`: Helper functions for LLM interaction and chain management.
-- `few_shots.py`: Contains training examples to guide the LLM's SQL generation.
+## 🔧 Installation & Setup
 
-## 🔧 Installation
+### 1. Install Ollama
+Download and install Ollama from [ollama.com](https://ollama.com).
 
-1. Clone the repository:
-   ```bash
-   git clone [https://github.com/wasim-h/T-shirt_store.git](https://github.com/wasim-h/T-shirt_store.git)
+### 2. Pull the Model
+Open your terminal and pull the model you want to use (e.g., Llama 3):
+```bash
+ollama pull llama3
