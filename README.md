@@ -24,3 +24,5 @@ Download and install Ollama from [ollama.com](https://ollama.com).
 Open your terminal and pull the model you want to use (e.g., Llama 3):
 ```bash
 ollama pull llama3
+
+![App Preview](app_preview.png)
