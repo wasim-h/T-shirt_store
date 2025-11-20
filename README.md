@@ -2,6 +2,8 @@
 
 A local GenAI application that helps users query a T-shirt store database using natural language. It runs entirely offline using **Ollama** and **LangChain**, ensuring data privacy and zero API costs.
 
+![App Preview](app_preview.png)
+
 ## 🚀 Features
 - **Local LLM Power:** Uses `Llama 3` (or `Mistral`) via Ollama for reasoning.
 - **Text-to-SQL:** Converts natural English questions ("How many white Nike shirts do we have?") into SQL queries.
@@ -25,4 +27,3 @@ Open your terminal and pull the model you want to use (e.g., Llama 3):
 ```bash
 ollama pull llama3
 
-![App Preview](app_preview.png)
