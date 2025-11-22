@@ -1,29 +1,39 @@
-# 👕 AI-Powered T-Shirt Store Assistant (Ollama Edition)
+# 👕 T-Shirt Store AI Analyst
 
-A local GenAI application that helps users query a T-shirt store database using natural language. It runs entirely offline using **Ollama** and **LangChain**, ensuring data privacy and zero API costs.
+A Natural Language to SQL (NL2SQL) application that allows store managers to ask questions about their inventory in plain English. The system uses LangChain, Ollama (Gemma 2), and a MySQL database to generate accurate SQL queries and return real-time answers.
 
-![App Preview](app_preview.png)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Flask](https://img.shields.io/badge/Flask-Web%20App-green)
+![LangChain](https://img.shields.io/badge/LangChain-Framework-orange)
+![Ollama](https://img.shields.io/badge/Ollama-Gemma%202-purple)
 
 ## 🚀 Features
-- **Local LLM Power:** Uses `Llama 3` (or `Mistral`) via Ollama for reasoning.
-- **Text-to-SQL:** Converts natural English questions ("How many white Nike shirts do we have?") into SQL queries.
-- **Privacy First:** No data leaves your local machine.
-- **Few-Shot Learning:** Uses `few_shots.py` to train the model on domain-specific SQL examples.
+
+* **Natural Language Queries:** Ask questions like "How many white Nike t-shirts do we have?" without writing SQL.
+* **Few-Shot Learning:** Uses vector embeddings (ChromaDB) to select relevant SQL examples, improving accuracy.
+* **SQL Generation & Execution:** Automatically generates syntactically correct MySQL queries and executes them safely.
+* **Clean UI:** A responsive web interface built with HTML/CSS and JavaScript.
+* **Model:** Powered by the local Gemma 2 model via Ollama.
 
 ## 🛠️ Tech Stack
-- **Python 3.10+**
-- **Ollama** (Local LLM Runner)
-- **LangChain** (Orchestration)
-- **Streamlit** (Frontend)
-- **ChromaDB** (Vector Store for example selection)
 
-## 🔧 Installation & Setup
+* **Backend:** Python, Flask
+* **LLM Orchestration:** LangChain (SQLDatabaseChain)
+* **LLM:** Ollama (Model: `gemma2:2b`)
+* **Embeddings:** HuggingFace (`sentence-transformers/all-MiniLM-L6-v2`)
+* **Vector Store:** ChromaDB
+* **Database:** MySQL
+* **Frontend:** HTML5, CSS3, JavaScript
 
-### 1. Install Ollama
-Download and install Ollama from [ollama.com](https://ollama.com).
+## 📂 Project Structure
 
-### 2. Pull the Model
-Open your terminal and pull the model you want to use (e.g., Llama 3):
-```bash
-ollama pull llama3
-
+```text
+├── static/
+│   └── style.css        # Frontend styling
+├── templates/
+│   └── index.html       # Chat interface
+├── app.py               # Flask application entry point
+├── langHelp.py          # LangChain & Ollama logic
+├── few_shots.py         # Training examples for the LLM
+├── requirements.txt     # Python dependencies
+└── README.md            # Project documentation

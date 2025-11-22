@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-Shirt Store AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-tshirt"></i> T-Shirt Store AI</h1>
+            <p>Ask questions about stock, sales, and inventory.</p>
+        </div>
+
+        <div class="chat-box">
+            <form id="queryForm">
+                <input type="text" id="question" name="question" placeholder="E.g., How many white Nike t-shirts do we have?" required autocomplete="off">
+                <button type="submit" id="submitBtn"><i class="fas fa-paper-plane"></i> Ask</button>
+            </form>
+        </div>
+
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <p>Generating SQL & Querying Database...</p>
+        </div>
+
+        <div id="resultContainer" class="hidden">
+            <div class="card answer-card">
+                <h3><i class="fas fa-robot"></i> Answer</h3>
+                <p id="answerText" class="answer-text"></p>
+            </div>
+
+            <div class="card sql-card">
+                <h3><i class="fas fa-database"></i> Generated SQL</h3>
+                <code id="sqlText"></code>
+            </div>
+        </div>
+        
+        <div id="errorContainer" class="hidden error-msg"></div>
+    </div>
+
+    <script>
+        document.getElementById('queryForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const question = document.getElementById('question').value;
+            const loading = document.getElementById('loading');
+            const resultContainer = document.getElementById('resultContainer');
+            const errorContainer = document.getElementById('errorContainer');
+            const submitBtn = document.getElementById('submitBtn');
+
+            // UI Reset
+            loading.classList.remove('hidden');
+            resultContainer.classList.add('hidden');
+            errorContainer.classList.add('hidden');
+            submitBtn.disabled = true;
+
+            try {
+                const formData = new FormData();
+                formData.append('question', question);
+
+                const response = await fetch('/get_answer', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                loading.classList.add('hidden');
+                submitBtn.disabled = false;
+
+                if (response.ok) {
+                    document.getElementById('answerText').textContent = data.answer;
+                    document.getElementById('sqlText').textContent = data.sql_query;
+                    resultContainer.classList.remove('hidden');
+                } else {
+                    errorContainer.textContent = "Error: " + (data.error || "Unknown error occurred");
+                    errorContainer.classList.remove('hidden');
+                }
+
+            } catch (error) {
+                loading.classList.add('hidden');
+                submitBtn.disabled = false;
+                errorContainer.textContent = "Network Error: " + error.message;
+                errorContainer.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
