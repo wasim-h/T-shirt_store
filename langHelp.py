@@ -52,15 +52,17 @@ def get_few_shot_db_chain():
     vectorstore = Chroma.from_texts(to_vectorize, embeddings, metadatas=few_shots)
     example_selector = SemanticSimilarityExampleSelector(
         vectorstore=vectorstore,
-        k=2,
+        k=4,
     )
     
     mysql_prompt = """You are a MySQL expert. Given an input question, create a syntactically correct MySQL query to run.
-IMPORTANT: Output ONLY the SQL query, no markdown formatting, no code blocks, no explanations.
-Unless the user specifies in the question a specific number of examples to obtain, query for at most {top_k} results using the LIMIT clause as per MySQL.
-Never query for all columns from a table. You must query only the columns that are needed to answer the question. Wrap each column name in backticks (`) to denote them as delimited identifiers.
-Pay attention to use only the column names you can see in the tables below. Be careful to not query for columns that do not exist. Also, pay attention to which column is in which table.
-Pay attention to use CURDATE() function to get the current date, if the question involves "today".
+IMPORTANT RULES:
+1. Output ONLY the SQL query. No markdown, no explanations.
+2. Unless specified, use LIMIT {top_k}.
+3. When asked for "how many items" or "stock", use SUM(stock_quantity).
+4. When asked for "how many types" or "varieties", use COUNT(*).
+5. CRITICAL: When asked for "total value", "total price", or "revenue", you MUST calculate SUM(price * stock_quantity). Never select just the price column.
+6. FILTER RULES: Do not filter by brand, size, or color unless the user explicitly asks for it in the question. (e.g., if asked for "all t-shirts", do not add "WHERE brand='Nike'").
 
 Only use the following tables:
 {table_info}
