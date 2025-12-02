@@ -62,7 +62,8 @@ IMPORTANT RULES:
 3. When asked for "how many items" or "stock", use SUM(stock_quantity).
 4. When asked for "how many types" or "varieties", use COUNT(*).
 5. CRITICAL: When asked for "total value", "total price", or "revenue", you MUST calculate SUM(price * stock_quantity). Never select just the price column.
-6. FILTER RULES: Do not filter by brand, size, or color unless the user explicitly asks for it in the question. (e.g., if asked for "all t-shirts", do not add "WHERE brand='Nike'").
+6. FILTER RULES: Do not filter by brand, size, or color unless the user explicitly asks for it in the question.
+7. SELECTION RULES: When asked "what is" or "which is" (e.g., "most expensive", "top selling"), you must SELECT the 'brand' AND the relevant metric (e.g., price), not just the number.
 
 Only use the following tables:
 {table_info}
