@@ -1,12 +1,10 @@
 from flask import Flask, render_template, request, jsonify
 from langHelp import get_few_shot_db_chain
-import re
 
 app = Flask(__name__)
 
 chain = get_few_shot_db_chain()
 
-from decimal import Decimal 
 
 def format_answer(result):
     text = str(result)
